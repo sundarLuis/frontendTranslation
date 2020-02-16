@@ -1,0 +1,74 @@
+<app-alertify *ngIf="alert == true" [alert]="alert" [body]="alertifyBody"></app-alertify>
+<div class="row">
+    <div class="col-sm-12">
+        <h3>User setup</h3>
+        <hr>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-5 col-sm-12">
+        <div class="card card-body">
+            <form #userForm="ngForm" (submit)="saveUser($event,userForm)">
+                <input type="hidden" name="_id" #_id="ngModel" [(ngModel)]="userService.selectdUser._id">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Email or User </label>
+                    <input type="email" name="email" class="form-control" id="exampleInputEmail1"
+                        [(ngModel)]="userService.selectdUser.email" aria-describedby="emailHelp"
+                        placeholder="Enter email">
+
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Password</label>
+                    <input type="{{showPass == false ? 'password':'text'}}" name="password" class="form-control"
+                        id="exampleInputPassword1" [(ngModel)]="userService.selectdUser.password"
+                        placeholder="Password">
+                </div>
+                <div class="form-group form-check">
+                    <input type="checkbox" class="form-check-input" (change)="handleSelectedShowPass($event)"
+                        id="exampleCheck1">
+                    <label class="form-check-label" for="exampleCheck1">show password</label>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Save</button>
+                <button *ngIf="edit == false" (click)="clearForm($event,userForm)"
+                    class="btn btn-secondary btn-block">clear</button>
+            </form>
+        </div>
+    </div>
+    <div class="col-md-7 col-sm-12">
+        <div class="card card-body table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Email or User</th>
+                        <th scope="col">Password</th>
+                        <th scope="col">Operations</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let user of userService.users">
+                        <td>{{user.email}}</td>
+                        <td>{{ user.password | hidePassword }}</td>
+                        <td>
+                            <i (click)="editUser(user)" class="fa fa-pencil fa-lg text-warning mr-3"
+                                aria-hidden="true"></i>
+                            <i (click)="VerifyId(user._id)" class="fa fa-trash fa-lg text-danger"
+                                aria-hidden="true"></i>
+
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- <div class="row">
+    <div *ngIf="alert == true" class="col-md-6 col-sm-12 ml-auto">
+        <div class="alert {{alertifyBody.type}} alert-dismissible fade show text-white" role="alert">
+            <strong class="">{{alertifyBody.message}}</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>
+</div> -->

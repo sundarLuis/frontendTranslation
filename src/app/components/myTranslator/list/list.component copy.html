@@ -1,0 +1,87 @@
+
+<div class="row">
+    <div class="col-md-5 col-sm-12">
+        <div class="card card-body">
+            <form #Form="ngForm" (submit)="save($event,Form)">
+                <input type="hidden" name="_id" #_id="ngModel" [(ngModel)]="service.selectedList._id">
+
+                <div class="form-group">
+                    <label for="inputName">Type </label>
+                    <select class="form-control" 
+                     name="type"  #type="ngModel"  [(ngModel)]="service.selectedList.type"> 
+                     <option  value="" disabled>-- select --</option>
+                     <option  value="paragraph">paragraph</option>
+                     <option  value="word">word</option>
+                    </select>
+                 </div>
+
+                 <div class="form-group">
+                    <label for="inputName">Language </label>
+                    <select class="form-control"  
+                     name="language"  #language="ngModel"  [(ngModel)]="service.selectedList.language"> 
+                     <option  value="" disabled>-- select --</option>
+                     <option  value="ES">Spanish</option>
+                     <option  value="US">English</option>
+                    </select>
+                 </div>
+                <!-- start content -->
+                <div  class="form-group">
+                    <label for="inputName">Content </label>
+                    <textarea   name="content" #content="ngModel" rows="5" class="form-control"
+                        [(ngModel)]="service.selectedList.content" 
+                        placeholder="Enter name"></textarea>
+                </div>
+                     <!-- end content -->
+                <!-- start Translation -->
+                <div *ngIf="edit === false"  class="form-group">
+                    <label for="inputName">Translation </label>
+                    <textarea   name="ids_translation" #ids_translation="ngModel" rows="5" class="form-control"
+                        [(ngModel)]="service.selectedList.ids_translation[0].translation " 
+                        placeholder="Enter name"></textarea>
+                </div>
+                <div *ngIf="edit === true" >
+                    <label for="inputName">Translation </label>
+                    <textarea *ngFor="let i of service.selectedList.ids_translation; let index = index"  name="ids_translation" #ids_translation="ngModel" rows="5" class="form-control"
+                        [(ngModel)]="service.selectedList.ids_translation[index].translation " 
+                        placeholder="Enter name"></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block">Save</button>
+                <button *ngIf="edit == false"
+                 (click)="clearForm($event,Form)"
+                    class="btn btn-secondary btn-block">
+                    clear</button>
+                </form>
+        </div>
+    </div>
+    <div class="col-md-7 col-sm-12">
+        <div class="card card-body table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Type </th>
+                        <th scope="col">Language </th>
+                        <th scope="col">Content</th>
+                        <th scope="col">Translations</th>
+                        <th scope="col">Status</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let list of service.listes">
+                        <td> {{list.type}} </td>
+                        <td>{{list.language}}</td>
+                        <td>{{list.content}} </td>
+                        <td> <span *ngFor="let i of list.ids_translation">{{i.translation }} </span></td>
+                        <td> {{list.status === 0 ? 'Pending':'Learned'}} </td>
+                        <td>
+                            <i (click)="edit_(list)" class="fa fa-pencil fa-lg text-warning mr-3"
+                            aria-hidden="true"></i>
+                      
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

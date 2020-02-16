@@ -1,0 +1,111 @@
+<div class="row">
+    <div class="col-md-12">
+        <h3>Create</h3>
+        <hr>
+    </div>
+</div>
+<div class="row mt-2">
+    <div class="col-md-12 col-sm-12">
+        <div class="card card-body">
+            <form #Form="ngForm" (submit)="save($event,Form)">
+                <input type="hidden" name="_id" #_id="ngModel" [(ngModel)]="service.selectedList._id">
+                <div class="form-row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="inputName">Type </label>
+                            <select class="form-control" 
+                             name="type"  #type="ngModel"  [(ngModel)]="service.selectedList.type"> 
+                             <option  value="" disabled>-- select --</option>
+                             <option  value="paragraph">paragraph</option>
+                             <option  value="word">word</option>
+                            </select>
+                         </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="inputName">Language </label>
+                            <select class="form-control"  
+                             name="language"  #language="ngModel"  [(ngModel)]="service.selectedList.language"> 
+                             <option  value="" disabled>-- select --</option>
+                             <option  value="ES">Spanish</option>
+                             <option  value="US">English</option>
+                            </select>
+                         </div>
+                    </div>
+                </div>
+              
+
+               
+                <!-- start content -->
+                <div  class="form-group">
+                    <label for="inputName">Content </label>
+                    <textarea   name="content" #content="ngModel" rows="3" class="form-control"
+                        [(ngModel)]="service.selectedList.content" 
+                        placeholder="Enter name"></textarea>
+                </div>
+                     <!-- end content -->
+
+                <!-- start Translation -->
+                <div class="form-row">
+                    <div class="col-md-2 col-sm-12">
+                        <div class=" btn btn-success" (click)="modal()">
+                           <i class="fa fa-plus fa-lg"></i> Translation
+                        </div>
+                    </div>
+                    <div class="col-md-10 col-sm-12">
+                        <div  class="form-group">
+                           <textarea  rows="1" class="form-control"
+                           disabled
+                                placeholder="Translation">
+                            {{ translations }}
+                            </textarea>
+                        </div>
+                    </div>
+                </div>
+              
+                <!-- end  Translation-->
+                <div class="d-flex justify-content-center">
+                    <button 
+                    (click)="goBack($event,Form)"
+                       class="btn btn-secondary  "> go back
+                       </button>
+                       <button 
+                    (click)="clearForm($event,true,Form)"
+                       class="btn btn-info mx-3">
+                       clear</button>
+                    <button type="submit" class="btn btn-primary ">Save</button>
+                  
+                </div>
+                </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <form #FormTranlation="ngForm" (submit)="saveTranslation($event,FormTranlation)">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Create Translation</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            
+            <textarea   name="translation" #translation="ngModel"
+             [(ngModel)]="service.selectedList.ids_translation[0].translation"  rows="3" class="form-control"
+            placeholder="Translation"></textarea>
+           
+      
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary" >Save changes</button>
+        </div>
+    </form>
+      </div>
+    </div>
+  </div>

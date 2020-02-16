@@ -1,0 +1,88 @@
+<app-alertify *ngIf="alert == true" [alert]="alert" [body]="alertifyBody"></app-alertify>
+<div class="row">
+    <div class="col-sm-12">
+        <h3>Expense setup</h3>
+        <hr>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-5 col-sm-12">
+        <div class="card card-body">
+            <form #expenseForm="ngForm" (submit)="saveExpense($event,expenseForm)">
+                <input type="hidden" name="_id" #_id="ngModel" [(ngModel)]="expenseService.selectedExpense._id">
+                
+                <div class="form-group">
+                        <label for="inputName">Type Money </label>
+                        <select class="form-control" name="id_typeMoney"  #id_category="ngModel"  [(ngModel)]="expenseService.selectedExpense.id_typeMoney[0]._id"> 
+                            <option value="" disabled>--- selected --</option>
+                            <option *ngFor="let category of categoryService.categories " [value]="category._id">{{category.name}}</option>
+                        </select>
+                </div>
+
+                <div class="form-group">
+                        <label for="inputName">Type Expense </label>
+                        <select class="form-control" name="id_typeExpenses"  #id_typeExpenses="ngModel"  [(ngModel)]="expenseService.selectedExpense.id_typeExpenses[0]._id"> 
+                            <option value="" disabled>--- selected --</option>
+                            <option *ngFor="let typeExpense_ of typeExpenseService.typeExpense " [value]="typeExpense_._id">{{typeExpense_.name}}</option>
+                        </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputName">Description </label>
+                    <textarea   name="description" #description="ngModel" rows="4" class="form-control" id="inputName"
+                        [(ngModel)]="expenseService.selectedExpense.description" aria-describedby="emailHelp"
+                        placeholder="Enter name"></textarea>
+
+                </div>
+                <div class="form-group">
+                    <label for="inputName">URL </label>
+                    <input type="text" name="url" #description="ngModel" class="form-control" id="inputName"
+                        [(ngModel)]="expenseService.selectedExpense.url" aria-describedby="emailHelp"
+                        placeholder="Enter name">
+
+                </div>
+                <div class="form-group">
+                    <label for="inputName">Price </label>
+                    <input type="text" name="price"  #price="ngModel" class="form-control" id="inputName"
+                        [(ngModel)]="expenseService.selectedExpense.price" aria-describedby="emailHelp"
+                        placeholder="Enter name">
+
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Save</button>
+                <button *ngIf="edit == false" (click)="clearForm($event,expenseForm)"
+                    class="btn btn-secondary btn-block">clear</button>
+            </form>
+        </div>
+    </div>
+    <div class="col-md-7 col-sm-12">
+        <div class="card card-body table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Type Money</th>
+                        <th scope="col">Type Expense</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">URL</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Operations</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let expense of expenseService.expense">
+                        <td>{{expense.id_typeMoney[0].name}}</td>
+                        <td>{{expense.id_typeExpenses[0].name}}</td>
+                        <td>{{expense.description | cutCadena}}</td>
+                        <td>{{expense.url? 'true':'false'}}</td>
+                        <td>{{expense.price}}</td>
+                        <td>
+                                <i (click)="editExpense(expense)" class="fa fa-pencil fa-lg text-warning mr-3"
+                                    aria-hidden="true"></i>
+                                <i (click)="deleteExpense(expense._id)" class="fa fa-trash fa-lg text-danger"
+                                    aria-hidden="true"></i>    
+                            </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

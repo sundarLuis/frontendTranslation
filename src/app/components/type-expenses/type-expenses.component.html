@@ -1,0 +1,53 @@
+<app-alertify *ngIf="alert == true" [alert]="alert" [body]="alertifyBody"></app-alertify>
+<div class="row">
+    <div class="col-sm-12">
+        <h3>Type Expense setup</h3>
+        <hr>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-5 col-sm-12">
+        <div class="card card-body">
+            <form #typeExpenseForm="ngForm" (submit)="saveTypeExpense($event,typeExpenseForm)">
+                <input type="hidden" name="_id" #_id="ngModel" [(ngModel)]="typeExpenseService.selectedTypeExpense._id">
+                <div class="form-group">
+                    <label for="inputName">Name </label>
+                    <input type="text" name="name" class="form-control" id="inputName"
+                        [(ngModel)]="typeExpenseService.selectedTypeExpense.name" 
+                        placeholder="Enter name">
+
+                </div>
+              
+                 <button type="submit" class="btn btn-primary btn-block">Save</button>
+                <button *ngIf="edit == false" (click)="clearForm($event,categoryForm)"
+                    class="btn btn-secondary btn-block">clear</button>
+            </form>
+        </div>
+    </div>
+    <div class="col-md-7 col-sm-12">
+        <div class="card card-body table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Operations</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let typeExpense of typeExpenseService.typeExpense">
+                        <td>{{typeExpense.name}}</td>
+                        <td>
+                            <i (click)="editTypeExpense(typeExpense)" class="fa fa-pencil fa-lg text-warning mr-3"
+                                aria-hidden="true"></i>
+                            <i (click)="deleteTypeExpense(typeExpense._id)" class="fa fa-trash fa-lg text-danger"
+                                aria-hidden="true"></i>
+
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
