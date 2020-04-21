@@ -17,7 +17,7 @@ export class TypeExpensesComponent implements OnInit {
     type: '',
   }
   constructor(
-    private typeExpenseService: TypeExpenseService
+    public typeExpenseService: TypeExpenseService
   ) { }
 
   ngOnInit() {

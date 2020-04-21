@@ -21,8 +21,8 @@ export class UserControlPanelComponent implements OnInit {
     type: '',
   }
   constructor(
-    private userService: UserService,
-    private authService: AuthService
+    public userService: UserService,
+    public authService: AuthService
   ) { }
 
   ngOnInit() {
